@@ -39,6 +39,7 @@ public struct DetailerConfigBase<Element, ValidateImage>
     public typealias OnValidate = (Context, Element) -> [String]
     public typealias OnCancel = (Context, Element) -> Void
     public typealias OnSave = (Context, Element) -> Void
+    public typealias Titler = (Element) -> String
 
     // MARK: Parameters
 
@@ -59,7 +60,7 @@ public struct DetailerConfigBase<Element, ValidateImage>
                 onValidate: @escaping OnValidate = { _, _ in [] },
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
-                titler: @escaping (Element) -> String,
+                titler: @escaping Titler,
                 @ViewBuilder validateFail: @escaping () -> ValidateImage)
     {
         self.minWidth = minWidth
@@ -81,7 +82,7 @@ public struct DetailerConfigBase<Element, ValidateImage>
                 onValidate: @escaping OnValidate = { _, _ in [] },
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
-                @ViewBuilder titler: @escaping (Element) -> String)
+                @ViewBuilder titler: @escaping Titler)
         where ValidateImage == Image
     {
         self.init(canEdit: canEdit,
