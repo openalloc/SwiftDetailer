@@ -6,10 +6,9 @@ Available as an open source Swift library to be incorporated in other apps.
 
 _SwiftDetailer_ is part of the [OpenAlloc](https://github.com/openalloc) family of open source Swift software tools.
 
-<p float="left">
-<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/macOSb.png" width="525" height="350"/>
-<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSc.png" width="343" height="690"/>
-</p>
+macOS | iOS
+:---:|:---:
+![](https://github.com/openalloc/SwiftDetailer/blob/main/Images/macOSb.png)  |  ![](https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSc.png)
 
 ## Features
 
@@ -156,14 +155,15 @@ For a full implementation, see the _DetailerDemo_ project (link below). It exten
 
 The use of context menus for macOS and iOS:
 
-<p float="left">
-<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/macOSa.png" width="525" height="350"/>
-<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSb.png" width="343" height="690"/>
-</p>
+macOS | iOS
+:---:|:---:
+![](https://github.com/openalloc/SwiftDetailer/blob/main/Images/macOSa.png)  |  ![](https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSb.png)
 
 And swipe menu for iOS:
 
-<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSa.png" width="343" height="690"/>
+iOS
+:---:
+![](https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSa.png)
 
 ## Validation
 
