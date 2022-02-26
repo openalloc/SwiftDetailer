@@ -44,12 +44,18 @@ public struct EditDetailerContextMenu<Element>: ViewModifier
                   element.wrappedValue)
     }
 
+    private var isDeleteAvailable: Bool {
+        config.onDelete != nil
+    }
+
     public func body(content: Content) -> some View {
         content
             .contextMenu {
                 DetailerEditButton(element: element, canEdit: config.canEdit) { toEdit = $0 }
-                Divider()
-                DetailerDeleteButton(element: element, canDelete: config.canDelete, onDelete: config.onDelete)
+                if isDeleteAvailable {
+                    Divider()
+                    DetailerDeleteButton(element: element, canDelete: config.canDelete, onDelete: config.onDelete)
+                }
             }
     }
 }

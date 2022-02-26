@@ -45,6 +45,10 @@ public struct EditDetailerSwipeMenu<Element>: ViewModifier
                   element.wrappedValue)
     }
 
+    private var isDeleteAvailable: Bool {
+        config.onDelete != nil
+    }
+
     public func body(content: Content) -> some View {
         content
             .swipeActions(edge: .leading, allowsFullSwipe: true) {
@@ -52,8 +56,12 @@ public struct EditDetailerSwipeMenu<Element>: ViewModifier
                     .tint(.accentColor)
             }
             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                DetailerDeleteButton(element: element, canDelete: config.canDelete, onDelete: config.onDelete)
-                    .tint(.red)
+                if isDeleteAvailable {
+                    DetailerDeleteButton(element: element, canDelete: config.canDelete, onDelete: config.onDelete)
+                        .tint(.red)
+                } else {
+                    EmptyView()
+                }
             }
     }
 }

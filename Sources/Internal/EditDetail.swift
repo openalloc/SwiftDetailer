@@ -95,7 +95,7 @@ struct EditDetail<Element, Detail>: View
 
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: cancelAction) {
-                    Text(isSaveAvailable ? "Cancel" : "Close")
+                    Text("Cancel")
                 }
                 .keyboardShortcut(.cancelAction)
             }
@@ -104,7 +104,6 @@ struct EditDetail<Element, Detail>: View
                     Text("Save")
                 }
                 .keyboardShortcut(.defaultAction)
-                .opacity(isSaveAvailable ? 1 : 0)
                 .disabled(!canSave)
             }
         }
