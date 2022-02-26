@@ -100,7 +100,7 @@ struct EditDetail<Element, Detail>: View
         }
         #if os(macOS)
         // NOTE on macOS, this seems to be needed to avoid excessive height
-        .frame(minWidth: 500, maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .frame(minWidth: config.minWidth, maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         #endif
 
         #if os(iOS) || targetEnvironment(macCatalyst)

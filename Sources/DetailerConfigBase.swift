@@ -23,6 +23,7 @@ import SwiftUI
 /// needed for Views.
 public typealias DetailerConfig<E> = DetailerConfigBase<E, Text, Image> where E: Identifiable
 
+public let detailerDefaultMinWidth: CGFloat = 300
 private let defaultTitler = ""
 private let defaultValidateFail = "exclamationmark.triangle"
 // TODO: defaults for all the non-nil parameters
@@ -43,6 +44,7 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
 
     // MARK: Parameters
 
+    public let minWidth: CGFloat
     public let canEdit: CanEdit?
     public let canDelete: CanDelete
     public let onDelete: OnDelete?
@@ -52,7 +54,8 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
     public let titler: (Element) -> TitleContent
     public let validateFail: () -> ValidateImage
 
-    public init(canEdit: CanEdit? = nil,
+    public init(minWidth: CGFloat = detailerDefaultMinWidth,
+                canEdit: CanEdit? = nil,
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
                 onValidate: @escaping OnValidate = { _, _ in [] },
@@ -61,6 +64,7 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
                 @ViewBuilder titler: @escaping (Element) -> TitleContent,
                 @ViewBuilder validateFail: @escaping () -> ValidateImage)
     {
+        self.minWidth = minWidth
         self.canEdit = canEdit
         self.canDelete = canDelete
         self.onDelete = onDelete
@@ -72,7 +76,8 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
     }
 
     // omitting: titler
-    public init(canEdit: CanEdit? = nil,
+    public init(minWidth: CGFloat = detailerDefaultMinWidth,
+                canEdit: CanEdit? = nil,
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
                 onValidate: @escaping OnValidate = { _, _ in [] },
@@ -92,7 +97,8 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
     }
 
     // omitting: validateFail
-    public init(canEdit: CanEdit? = nil,
+    public init(minWidth: CGFloat = detailerDefaultMinWidth,
+                canEdit: CanEdit? = nil,
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
                 onValidate: @escaping OnValidate = { _, _ in [] },
@@ -112,7 +118,8 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
     }
 
     // omitting: validateFail, titler
-    public init(canEdit: CanEdit? = nil,
+    public init(minWidth: CGFloat = detailerDefaultMinWidth,
+                canEdit: CanEdit? = nil,
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
                 onValidate: @escaping OnValidate = { _, _ in [] },
