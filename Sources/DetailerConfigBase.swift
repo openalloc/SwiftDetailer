@@ -21,16 +21,14 @@ import SwiftUI
 /// Convenience alias which hides the "Image"-bound type ugliness.
 /// Can't figure out how to avoid it yet. Curiously this isn't
 /// needed for Views.
-public typealias DetailerConfig<E> = DetailerConfigBase<E, Text, Image> where E: Identifiable
+public typealias DetailerConfig<E> = DetailerConfigBase<E, Image> where E: Identifiable
 
 public let detailerDefaultMinWidth: CGFloat = 300
-private let defaultTitler = ""
 private let defaultValidateFail = "exclamationmark.triangle"
 // TODO: defaults for all the non-nil parameters
 
-public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
+public struct DetailerConfigBase<Element, ValidateImage>
     where Element: Identifiable,
-    TitleContent: View,
     ValidateImage: View
 {
     public typealias Context = DetailerContext<Element>
@@ -51,7 +49,7 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
     public let onValidate: OnValidate
     public let onSave: OnSave?
     public let onCancel: OnCancel
-    public let titler: (Element) -> TitleContent
+    public let titler: (Element) -> String
     public let validateFail: () -> ValidateImage
 
     public init(minWidth: CGFloat = detailerDefaultMinWidth,
@@ -61,7 +59,7 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
                 onValidate: @escaping OnValidate = { _, _ in [] },
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
-                @ViewBuilder titler: @escaping (Element) -> TitleContent,
+                titler: @escaping (Element) -> String,
                 @ViewBuilder validateFail: @escaping () -> ValidateImage)
     {
         self.minWidth = minWidth
@@ -75,27 +73,6 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
         self.validateFail = validateFail
     }
 
-    // omitting: titler
-    public init(minWidth: CGFloat = detailerDefaultMinWidth,
-                canEdit: CanEdit? = nil,
-                canDelete: @escaping CanDelete = { _ in true },
-                onDelete: OnDelete? = nil,
-                onValidate: @escaping OnValidate = { _, _ in [] },
-                onSave: OnSave? = nil,
-                onCancel: @escaping OnCancel = { _, _ in },
-                @ViewBuilder validateFail: @escaping () -> ValidateImage)
-        where TitleContent == Text
-    {
-        self.init(canEdit: canEdit,
-                  canDelete: canDelete,
-                  onDelete: onDelete,
-                  onValidate: onValidate,
-                  onSave: onSave,
-                  onCancel: onCancel,
-                  titler: { _ in Text(defaultTitler) },
-                  validateFail: validateFail)
-    }
-
     // omitting: validateFail
     public init(minWidth: CGFloat = detailerDefaultMinWidth,
                 canEdit: CanEdit? = nil,
@@ -104,7 +81,7 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
                 onValidate: @escaping OnValidate = { _, _ in [] },
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
-                @ViewBuilder titler: @escaping (Element) -> TitleContent)
+                @ViewBuilder titler: @escaping (Element) -> String)
         where ValidateImage == Image
     {
         self.init(canEdit: canEdit,
@@ -114,26 +91,6 @@ public struct DetailerConfigBase<Element, TitleContent, ValidateImage>
                   onSave: onSave,
                   onCancel: onCancel,
                   titler: titler,
-                  validateFail: { Image(systemName: defaultValidateFail) })
-    }
-
-    // omitting: validateFail, titler
-    public init(minWidth: CGFloat = detailerDefaultMinWidth,
-                canEdit: CanEdit? = nil,
-                canDelete: @escaping CanDelete = { _ in true },
-                onDelete: OnDelete? = nil,
-                onValidate: @escaping OnValidate = { _, _ in [] },
-                onSave: OnSave? = nil,
-                onCancel: @escaping OnCancel = { _, _ in })
-        where ValidateImage == Image, TitleContent == Text
-    {
-        self.init(canEdit: canEdit,
-                  canDelete: canDelete,
-                  onDelete: onDelete,
-                  onValidate: onValidate,
-                  onSave: onSave,
-                  onCancel: onCancel,
-                  titler: { _ in Text(defaultTitler) },
                   validateFail: { Image(systemName: defaultValidateFail) })
     }
 }

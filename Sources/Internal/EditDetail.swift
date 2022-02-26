@@ -49,12 +49,20 @@ struct EditDetail<Element, Detail>: View
                                  isAdd: isAdd)
     }
 
+    private var isDeleteAvailable: Bool {
+        config.onDelete != nil
+    }
+    
     private var canDelete: Bool {
-        config.onDelete != nil && config.canDelete(element)
+        isDeleteAvailable && config.canDelete(element)
+    }
+    
+    private var isSaveAvailable: Bool {
+        config.onSave != nil
     }
 
     private var canSave: Bool {
-        config.onSave != nil && invalidFields.isEmpty
+        isSaveAvailable && invalidFields.isEmpty
     }
 
     // MARK: Views
@@ -62,7 +70,7 @@ struct EditDetail<Element, Detail>: View
     var body: some View {
         VStack(alignment: .leading) { // .leading needed to keep title from centering
             #if os(macOS)
-                config.titler(element)
+                Text(config.titler(element))
             #endif
             // this is where the user will typically declare a Form or VStack
             detailContent(context, $element)
@@ -81,12 +89,13 @@ struct EditDetail<Element, Detail>: View
                     Text("Delete")
                 }
                 .keyboardShortcut(.delete)
+                .opacity(isDeleteAvailable ? 1 : 0)
                 .disabled(!canDelete)
             }
 
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: cancelAction) {
-                    Text("Cancel")
+                    Text(isSaveAvailable ? "Cancel" : "Close")
                 }
                 .keyboardShortcut(.cancelAction)
             }
@@ -95,6 +104,7 @@ struct EditDetail<Element, Detail>: View
                     Text("Save")
                 }
                 .keyboardShortcut(.defaultAction)
+                .opacity(isSaveAvailable ? 1 : 0)
                 .disabled(!canSave)
             }
         }
