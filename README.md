@@ -17,7 +17,7 @@ macOS | iOS
 * Presently targeting macOS v11+ and iOS v14+\*\*
 * Optional support for operations to Add New records and Delete them
 * Optional support for both field-level validation and record-level validation
-* No type erasure (i.e., use of `AnyView`), which can impact scalability and performance
+* No View type erasure (i.e., use of `AnyView`), which can impact scalability and performance
 * No external dependencies!
 
 \* And also the `Tabler` table component (by the same author; see link below)
