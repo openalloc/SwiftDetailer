@@ -60,12 +60,12 @@ struct ContentView: View {
 
 To add basic support for a detail page, targeting both macOS and iOS, you'll need to:
 
-A. Import the `DetailerSwift` package.
-B. Add state properties.
-C. Give each row a menu (context for macOS; swipe for iOS).
-D. Add a call to `editDetailer`, available as a modifier.
-E. Include a `Form` containing the fields to edit, and...
-F. Add an action handler to save a modified `Fruit` element, along with a few support methods.
+* A. Import the `DetailerSwift` package.
+* B. Add state properties.
+* C. Give each row a menu (context for macOS; swipe for iOS).
+* D. Add a call to `editDetailer`, available as a modifier.
+* E. Include a `Form` containing the fields to edit, and...
+* F. Add an action handler to save a modified `Fruit` element, along with a few support methods.
 
 These are shown (and annotated) in the modified code below:
 
