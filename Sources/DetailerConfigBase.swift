@@ -82,7 +82,7 @@ public struct DetailerConfigBase<Element, ValidateImage>
                 onValidate: @escaping OnValidate = { _, _ in [] },
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
-                @ViewBuilder titler: @escaping Titler)
+                titler: @escaping Titler)
         where ValidateImage == Image
     {
         self.init(canEdit: canEdit,
