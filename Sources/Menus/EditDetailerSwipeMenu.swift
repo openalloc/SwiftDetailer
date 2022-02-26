@@ -56,11 +56,10 @@ public struct EditDetailerSwipeMenu<Element>: ViewModifier
                     .tint(.accentColor)
             }
             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                // NOTE if no delete handler, hide menu item entirely
                 if isDeleteAvailable {
                     DetailerDeleteButton(element: element, canDelete: config.canDelete, onDelete: config.onDelete)
                         .tint(.red)
-                } else {
-                    EmptyView()
                 }
             }
     }

@@ -52,6 +52,8 @@ public struct EditDetailerContextMenu<Element>: ViewModifier
         content
             .contextMenu {
                 DetailerEditButton(element: element, canEdit: config.canEdit) { toEdit = $0 }
+                
+                // NOTE if no delete handler, hide menu item entirely
                 if isDeleteAvailable {
                     Divider()
                     DetailerDeleteButton(element: element, canDelete: config.canDelete, onDelete: config.onDelete)
