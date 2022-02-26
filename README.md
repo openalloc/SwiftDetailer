@@ -6,6 +6,11 @@ Available as an open source Swift library to be incorporated in other apps.
 
 _SwiftDetailer_ is part of the [OpenAlloc](https://github.com/openalloc) family of open source Swift software tools.
 
+<p float="left">
+<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/macOSb.png" width="525" height="350"/>
+<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSc.png" width="343" height="690"/>
+</p>
+
 ## Features
 
 * Convenient editing of structured data in your app
@@ -147,6 +152,19 @@ On macOS, ctrl-click (or right-click) on a row to invoke the context menu. On iO
 
 For a full implementation, see the _DetailerDemo_ project (link below). It extends the example with operations to add new records, delete records, and validate input. Among other features, it shows _Detailer_ used with `LazyVGrid` and `Table` containers.
 
+## Menuing
+
+The use of context menus for macOS and iOS:
+
+<p float="left">
+<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/macOSa.png" width="525" height="350"/>
+<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSb.png" width="343" height="690"/>
+</p>
+
+And swipe menu for iOS:
+
+<img src="https://github.com/openalloc/SwiftDetailer/blob/main/Images/iOSa.png" width="343" height="690"/>
+
 ## Validation
 
 You can optionally validate data both at the field and record level.
@@ -173,7 +191,7 @@ private func editDetail(ctx: DetailerContext<Fruit>, element: Binding<Fruit>) ->
 
 The first two are testing string length. The third is testing the numerical value.
 
-By default, invalid fields will be suffixed with a warning icon, currently an "exclamationmark.triangle", which is configurable.
+By default, invalid fields will be suffixed with a warning icon, currently an "exclamationmark.triangle", as displayed in the images above. This image is configurable.
 
 All field-level validations must return `true` for the `Save` button to be enabled.
 
