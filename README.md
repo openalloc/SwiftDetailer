@@ -2,7 +2,7 @@
 
 A multi-platform SwiftUI component for editing fielded data.
 
-Available as an open source Swift library to be incorporated in other apps.
+Available as an open source library to be incorporated in SwiftUI apps.
 
 _SwiftDetailer_ is part of the [OpenAlloc](https://github.com/openalloc) family of open source Swift software tools.
 
