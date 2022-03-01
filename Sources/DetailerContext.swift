@@ -21,15 +21,16 @@ import SwiftUI
 public struct DetailerContext<Element>
     where Element: Identifiable
 {
+    public typealias Config = DetailerConfig<Element>
     public typealias OnValidate = (AnyKeyPath, Bool) -> Void
 
     // MARK: Parameters
 
-    public let config: DetailerConfig<Element>
+    public let config: Config
     public let onValidate: OnValidate
     public let isAdd: Bool
 
-    public init(config: DetailerConfig<Element>,
+    public init(config: Config,
                 onValidate: @escaping OnValidate,
                 isAdd: Bool)
     {

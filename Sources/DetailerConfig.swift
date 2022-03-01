@@ -18,18 +18,25 @@
 
 import SwiftUI
 
-/// Convenience alias which hides the "Image"-bound type ugliness.
-/// Can't figure out how to avoid it yet. Curiously this isn't
-/// needed for Views.
-public typealias DetailerConfig<E> = DetailerConfigBase<E, Image> where E: Identifiable
+public enum DetailerConfigDefaults {
+    
+    #if os(macOS)
+    public static let detailerDefaultMinWidth: CGFloat = 300
+    #elseif os(iOS)
+    public static let detailerDefaultMinWidth: CGFloat = 0
+    #endif
+    
+    public static let defaultValidateIndicator: (Bool) -> AnyView = { AnyView(
+        Image(systemName: "exclamationmark.triangle")
+            .font(.title2)
+            .backport.symbolRenderingMode()
+            .foregroundColor(.orange)
+            .opacity($0 ? 0 : 1)
+    )}
+}
 
-public let detailerDefaultMinWidth: CGFloat = 300
-private let defaultValidateFail = "exclamationmark.triangle"
-// TODO: defaults for all the non-nil parameters
-
-public struct DetailerConfigBase<Element, ValidateImage>
-    where Element: Identifiable,
-    ValidateImage: View
+public struct DetailerConfig<Element>
+    where Element: Identifiable
 {
     public typealias Context = DetailerContext<Element>
 
@@ -40,6 +47,7 @@ public struct DetailerConfigBase<Element, ValidateImage>
     public typealias OnCancel = (Context, Element) -> Void
     public typealias OnSave = (Context, Element) -> Void
     public typealias Titler = (Element) -> String
+    public typealias ValidateIndicator = (Bool) -> AnyView
 
     // MARK: Parameters
 
@@ -50,10 +58,10 @@ public struct DetailerConfigBase<Element, ValidateImage>
     public let onValidate: OnValidate
     public let onSave: OnSave?
     public let onCancel: OnCancel
-    public let titler: (Element) -> String
-    public let validateFail: () -> ValidateImage
+    public let titler: Titler
+    public let validateIndicator: ValidateIndicator
 
-    public init(minWidth: CGFloat = detailerDefaultMinWidth,
+    public init(minWidth: CGFloat = DetailerConfigDefaults.detailerDefaultMinWidth,
                 canEdit: CanEdit? = nil,
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
@@ -61,7 +69,7 @@ public struct DetailerConfigBase<Element, ValidateImage>
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
                 titler: @escaping Titler,
-                @ViewBuilder validateFail: @escaping () -> ValidateImage)
+                validateIndicator: @escaping ValidateIndicator = DetailerConfigDefaults.defaultValidateIndicator)
     {
         self.minWidth = minWidth
         self.canEdit = canEdit
@@ -71,27 +79,27 @@ public struct DetailerConfigBase<Element, ValidateImage>
         self.onSave = onSave
         self.onCancel = onCancel
         self.titler = titler
-        self.validateFail = validateFail
+        self.validateIndicator = validateIndicator
     }
+}
 
-    // omitting: validateFail
-    public init(minWidth: CGFloat = detailerDefaultMinWidth,
-                canEdit: CanEdit? = nil,
-                canDelete: @escaping CanDelete = { _ in true },
-                onDelete: OnDelete? = nil,
-                onValidate: @escaping OnValidate = { _, _ in [] },
-                onSave: OnSave? = nil,
-                onCancel: @escaping OnCancel = { _, _ in },
-                titler: @escaping Titler)
-        where ValidateImage == Image
-    {
-        self.init(canEdit: canEdit,
-                  canDelete: canDelete,
-                  onDelete: onDelete,
-                  onValidate: onValidate,
-                  onSave: onSave,
-                  onCancel: onCancel,
-                  titler: titler,
-                  validateFail: { Image(systemName: defaultValidateFail) })
+
+// Backport for .symbolRenderingMode which isn't supported in earlier versions
+struct Backport<Content: View> {
+    let content: Content
+}
+
+extension View {
+    var backport: Backport<Self> { Backport(content: self) }
+}
+
+extension Backport {
+    @ViewBuilder func symbolRenderingMode() -> some View {
+        if #available(macOS 12.0, iOS 15.0, *) {
+            self.content
+                .symbolRenderingMode(.hierarchical)
+        } else {
+            content
+        }
     }
 }

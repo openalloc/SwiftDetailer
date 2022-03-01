@@ -31,11 +31,7 @@ struct Validate<Element, T>: View
     var test: Test
 
     var body: some View {
-        ctx.config.validateFail()
-            .backport.symbolRenderingMode() // .symbolRenderingMode(.hierarchical)
-            .font(.title2)
-            .foregroundColor(.secondary)
-            .opacity(test(value) ? 0 : 1)
+        ctx.config.validateIndicator(test(value))
             .onAppear {
                 updateSet(value)
             }
@@ -48,27 +44,6 @@ struct Validate<Element, T>: View
     private func updateSet(_ nuValue: T) {
         DispatchQueue.main.async {
             ctx.onValidate(anyKeyPath, test(nuValue))
-        }
-    }
-}
-
-// Backport for .symbolRenderingMode which isn't supported in earlier versions
-
-struct Backport<Content: View> {
-    let content: Content
-}
-
-extension View {
-    var backport: Backport<Self> { Backport(content: self) }
-}
-
-extension Backport {
-    @ViewBuilder func symbolRenderingMode() -> some View {
-        if #available(macOS 12.0, iOS 15.0, *) {
-            self.content
-                .symbolRenderingMode(.hierarchical).foregroundColor(.orange)
-        } else {
-            content
         }
     }
 }

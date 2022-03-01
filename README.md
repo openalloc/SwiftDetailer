@@ -12,12 +12,14 @@ macOS | iOS
 
 ## Features
 
-* Convenient editing of structured data in your app
+* Convenient editing (and viewing) of fielded data in your app
 * Can be used with various collection container types, such as `List`, `Table`, `LazyVStack`, etc.\*
 * Presently targeting macOS v11+ and iOS v14+\*\*
-* Optional support for operations to Add New records and Delete them
-* Optional support for both field-level validation and record-level validation
-* No View type erasure (i.e., use of `AnyView`), which can impact scalability and performance
+* Both bound (`editDetailer`) and unbound (`viewDetailer`) views available
+* Optional support for operations to add new records and delete them
+* Optional support for field-level validation, with indicators
+* Optional support for record-level validation, with alert view
+* Minimal use of View type erasure (i.e., use of `AnyView`)
 * No external dependencies!
 
 \* And also the `Tabler` table component (by the same author; see link below)
@@ -149,7 +151,9 @@ struct ContentView: View {
 
 On macOS, ctrl-click (or right-click) on a row to invoke the context menu. On iOS, swipe the row to invoke the menu.
 
-For a full implementation, see the _DetailerDemo_ project (link below). It extends the example with operations to add new records, delete records, and validate input. Among other features, it shows _Detailer_ used with `LazyVGrid` and `Table` containers.
+For a full implementation, see the _DetailerDemo_ project (link below). It extends the example with operations to add new records, delete records, and validate input. 
+
+It shows _Detailer_ used with `LazyVGrid` and `Table` containers.
 
 ## Menuing
 
@@ -194,6 +198,8 @@ The first two are testing string length. The third is testing the numerical valu
 By default, invalid fields will be suffixed with a warning icon, currently an "exclamationmark.triangle", as displayed in the images above. This image is configurable.
 
 All field-level validations must return `true` for the `Save` button to be enabled.
+
+TIP: for consistent margin spacing in layout, you can create a validation that always succeeds: `.validate(...) { _ in true }`.
 
 ### Record-level validation
 
