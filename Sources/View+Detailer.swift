@@ -81,9 +81,19 @@ public extension View {
     where E: Identifiable,
           D: View
     {
-        ViewDetailer(config: config,
-                     toView: toView,
-                     viewContent: viewContent,
-                     containerContent: { self })
+        self.sheet(item: toView) { element in
+#if os(macOS)
+            ViewDetail(config: config,
+                        element: element,
+                       viewContent: viewContent)
+#elseif os(iOS)
+            NavigationView {
+                ViewDetail(config: config,
+                            element: element,
+                           viewContent: viewContent)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+#endif
+        }
     }
 }
