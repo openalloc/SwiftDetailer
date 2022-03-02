@@ -23,7 +23,6 @@ public extension View {
     typealias ProjectedValue<E> = ObservedObject<E>.Wrapper where E: ObservableObject
     typealias EditContentC<E, D> = (DetailerContext<E>, ProjectedValue<E>) -> D where E: Identifiable & ObservableObject
     typealias EditContentR<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
-    typealias ViewContent<E, D> = (E) -> D where E: Identifiable
     
     /// For Random Access Collection source
     func editDetailer<E, D>(_ config: DetailerConfig<E>,
@@ -42,9 +41,9 @@ public extension View {
 #elseif os(iOS)
             NavigationView {
                 EditDetailR(config: config,
-                           element: element,
-                           isAdd: isAdd,
-                           detailContent: detailContent)
+                            element: element,
+                            isAdd: isAdd,
+                            detailContent: detailContent)
             }
             .navigationViewStyle(StackNavigationViewStyle())
 #endif
@@ -76,6 +75,11 @@ public extension View {
 #endif
         }
     }
+}
+
+public extension View {
+    
+    typealias ViewContent<E, D> = (E) -> D where E: Identifiable
     
     func viewDetailer<E, D>(_ config: DetailerConfig<E>,
                             toView: Binding<E?>,
@@ -85,12 +89,12 @@ public extension View {
     {
         self.sheet(item: toView) { element in
 #if os(macOS)
-            ViewDetailR(config: config,
+            ViewDetail(config: config,
                        element: element,
                        viewContent: viewContent)
 #elseif os(iOS)
             NavigationView {
-                ViewDetailR(config: config,
+                ViewDetail(config: config,
                            element: element,
                            viewContent: viewContent)
             }
