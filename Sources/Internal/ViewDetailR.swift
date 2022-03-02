@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-struct ViewDetail<Element, Detail>: View
+struct ViewDetailR<Element, Detail>: View
     where Element: Identifiable,
     Detail: View
 {

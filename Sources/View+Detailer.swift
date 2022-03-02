@@ -25,6 +25,7 @@ public extension View {
     typealias EditContentR<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
     typealias ViewContent<E, D> = (E) -> D where E: Identifiable
     
+    /// For Random Access Collection source
     func editDetailer<E, D>(_ config: DetailerConfig<E>,
                             toEdit: Binding<E?>,
                             isAdd: Binding<Bool>,
@@ -35,12 +36,12 @@ public extension View {
         self.sheet(item: toEdit) { element in
 #if os(macOS)
             EditDetailR(config: config,
-                       element: element,
-                       isAdd: isAdd,
-                       detailContent: detailContent)
+                        element: element,
+                        isAdd: isAdd,
+                        detailContent: detailContent)
 #elseif os(iOS)
             NavigationView {
-                EditDetail(config: config,
+                EditDetailR(config: config,
                            element: element,
                            isAdd: isAdd,
                            detailContent: detailContent)
@@ -50,10 +51,11 @@ public extension View {
         }
     }
     
-    func editDetailerC<E, D>(_ config: DetailerConfig<E>,
-                             toEdit: Binding<E?>,
-                             isAdd: Binding<Bool>,
-                             @ViewBuilder detailContent: @escaping EditContentC<E, D>) -> some View
+    /// For Core Data source
+    func editDetailer<E, D>(_ config: DetailerConfig<E>,
+                            toEdit: Binding<E?>,
+                            isAdd: Binding<Bool>,
+                            @ViewBuilder detailContent: @escaping EditContentC<E, D>) -> some View
     where E: Identifiable & ObservableObject,
           D: View
     {
@@ -83,13 +85,13 @@ public extension View {
     {
         self.sheet(item: toView) { element in
 #if os(macOS)
-            ViewDetail(config: config,
-                        element: element,
+            ViewDetailR(config: config,
+                       element: element,
                        viewContent: viewContent)
 #elseif os(iOS)
             NavigationView {
-                ViewDetail(config: config,
-                            element: element,
+                ViewDetailR(config: config,
+                           element: element,
                            viewContent: viewContent)
             }
             .navigationViewStyle(StackNavigationViewStyle())
