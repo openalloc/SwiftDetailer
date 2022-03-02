@@ -217,6 +217,7 @@ If this validation is used, the user will not be able to save changes until it r
 ## See Also
 
 * [DetailerDemo](https://github.com/openalloc/DetailerDemo) - the demonstration app for this library
+* [TablerCoreDemo](https://github.com/openalloc/TablerCoreDemo) - the demonstration app for this library, for Core Data sources
 
 Swift open-source libraries (by the same author):
 
