@@ -19,7 +19,7 @@
 import SwiftUI
 
 /// RandomAccess support
-struct EditDetail<Element, Detail>: View
+struct EditDetailR<Element, Detail>: View
 where Element: Identifiable,
       Detail: View
 {

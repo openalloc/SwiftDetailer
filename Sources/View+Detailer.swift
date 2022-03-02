@@ -22,19 +22,19 @@ import CoreData
 public extension View {
     typealias ProjectedValue<E> = ObservedObject<E>.Wrapper where E: ObservableObject
     typealias EditContentC<E, D> = (DetailerContext<E>, ProjectedValue<E>) -> D where E: Identifiable & ObservableObject
-    typealias EditContent<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
+    typealias EditContentR<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
     typealias ViewContent<E, D> = (E) -> D where E: Identifiable
     
     func editDetailer<E, D>(_ config: DetailerConfig<E>,
                             toEdit: Binding<E?>,
                             isAdd: Binding<Bool>,
-                            @ViewBuilder detailContent: @escaping EditContent<E, D>) -> some View
+                            @ViewBuilder detailContent: @escaping EditContentR<E, D>) -> some View
     where E: Identifiable,
           D: View
     {
         self.sheet(item: toEdit) { element in
 #if os(macOS)
-            EditDetail(config: config,
+            EditDetailR(config: config,
                        element: element,
                        isAdd: isAdd,
                        detailContent: detailContent)
