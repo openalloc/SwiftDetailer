@@ -21,45 +21,65 @@ import CoreData
 
 public extension View {
     typealias ProjectedValue<E> = ObservedObject<E>.Wrapper where E: ObservableObject
-    typealias EditDetailContentC<E, D> = (DetailerContext<E>, ProjectedValue<E>) -> D where E: Identifiable & ObservableObject
-    typealias EditDetailContent<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
-    typealias ViewDetailContent<E, D> = (E) -> D where E: Identifiable
+    typealias EditContentC<E, D> = (DetailerContext<E>, ProjectedValue<E>) -> D where E: Identifiable & ObservableObject
+    typealias EditContent<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
+    typealias ViewContent<E, D> = (E) -> D where E: Identifiable
     
-    func editDetailer<Element, Detail>(_ config: DetailerConfig<Element>,
-                                       toEdit: Binding<Element?>,
-                                       isAdd: Binding<Bool>,
-                                       @ViewBuilder detailContent: @escaping EditDetailContent<Element, Detail>) -> some View
-    where Element: Identifiable,
-          Detail: View
+    func editDetailer<E, D>(_ config: DetailerConfig<E>,
+                            toEdit: Binding<E?>,
+                            isAdd: Binding<Bool>,
+                            @ViewBuilder detailContent: @escaping EditContent<E, D>) -> some View
+    where E: Identifiable,
+          D: View
     {
-        EditDetailer(config: config,
-                     toEdit: toEdit,
-                     isAdd: isAdd,
-                     detailContent: detailContent,
-                     containerContent: { self })
+        self.sheet(item: toEdit) { element in
+#if os(macOS)
+            EditDetail(config: config,
+                       element: element,
+                       isAdd: isAdd,
+                       detailContent: detailContent)
+#elseif os(iOS)
+            NavigationView {
+                EditDetail(config: config,
+                           element: element,
+                           isAdd: isAdd,
+                           detailContent: detailContent)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+#endif
+        }
     }
     
-    func editDetailerC<Element, Detail>(_ config: DetailerConfig<Element>,
-                                        toEdit: Binding<Element?>,
-                                        isAdd: Binding<Bool>,
-                                        //childContext: NSManagedObjectContext,
-                                        @ViewBuilder detailContent: @escaping EditDetailContentC<Element, Detail>) -> some View
-    where Element: Identifiable & ObservableObject,
-          Detail: View
+    func editDetailerC<E, D>(_ config: DetailerConfig<E>,
+                             toEdit: Binding<E?>,
+                             isAdd: Binding<Bool>,
+                             @ViewBuilder detailContent: @escaping EditContentC<E, D>) -> some View
+    where E: Identifiable & ObservableObject,
+          D: View
     {
-        EditDetailerC(config: config,
-                      toEdit: toEdit,
-                      isAdd: isAdd,
-                      //childContext: childContext,
-                      detailContent: detailContent,
-                      containerContent: { self })
+        self.sheet(item: toEdit) { element in
+#if os(macOS)
+            EditDetailC(config: config,
+                        element: element,
+                        isAdd: isAdd,
+                        detailContent: detailContent)
+#elseif os(iOS)
+            NavigationView {
+                EditDetailC(config: config,
+                            element: element,
+                            isAdd: isAdd,
+                            detailContent: detailContent)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+#endif
+        }
     }
     
-    func viewDetailer<Element, Detail>(_ config: DetailerConfig<Element>,
-                                       toView: Binding<Element?>,
-                                       @ViewBuilder viewContent: @escaping ViewDetailContent<Element, Detail>) -> some View
-    where Element: Identifiable,
-          Detail: View
+    func viewDetailer<E, D>(_ config: DetailerConfig<E>,
+                            toView: Binding<E?>,
+                            @ViewBuilder viewContent: @escaping ViewContent<E, D>) -> some View
+    where E: Identifiable,
+          D: View
     {
         ViewDetailer(config: config,
                      toView: toView,
