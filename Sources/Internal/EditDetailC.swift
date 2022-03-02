@@ -1,5 +1,5 @@
 //
-//  EditDetail.swift
+//  EditDetailC.swift
 //
 // Copyright 2022 FlowAllocator LLC
 //
@@ -18,16 +18,16 @@
 
 import SwiftUI
 
-/// RandomAccess support
-struct EditDetail<Element, Detail>: View
-where Element: Identifiable,
+/// Core Data support
+struct EditDetailC<Element, Detail>: View
+where Element: Identifiable & ObservableObject,
       Detail: View
 {
-    typealias BoundValue = Binding<Element>
-    typealias DetailContent = (DetailerContext<Element>, BoundValue) -> Detail
+    typealias ProjectedValue = ObservedObject<Element>.Wrapper
+    typealias DetailContent = (DetailerContext<Element>, ProjectedValue) -> Detail
     
     var config: DetailerConfig<Element>
-    @State var element: Element
+    @ObservedObject var element: Element
     @Binding var isAdd: Bool
     var detailContent: DetailContent
     
@@ -39,7 +39,3 @@ where Element: Identifiable,
         }
     }
 }
-
-
-
-
