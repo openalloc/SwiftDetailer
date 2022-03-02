@@ -21,12 +21,12 @@ import SwiftUI
 public enum DetailerConfigDefaults {
     
     #if os(macOS)
-    public static let detailerDefaultMinWidth: CGFloat = 300
+    public static let minWidth: CGFloat = 300
     #elseif os(iOS)
-    public static let detailerDefaultMinWidth: CGFloat = 0
+    public static let minWidth: CGFloat = 0
     #endif
     
-    public static let defaultValidateIndicator: (Bool) -> AnyView = { AnyView(
+    public static let validateIndicator: (Bool) -> AnyView = { AnyView(
         Image(systemName: "exclamationmark.triangle")
             .font(.title2)
             .backport.symbolRenderingMode()
@@ -61,7 +61,7 @@ public struct DetailerConfig<Element>
     public let titler: Titler
     public let validateIndicator: ValidateIndicator
 
-    public init(minWidth: CGFloat = DetailerConfigDefaults.detailerDefaultMinWidth,
+    public init(minWidth: CGFloat = DetailerConfigDefaults.minWidth,
                 canEdit: CanEdit? = nil,
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
@@ -69,7 +69,7 @@ public struct DetailerConfig<Element>
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
                 titler: @escaping Titler,
-                validateIndicator: @escaping ValidateIndicator = DetailerConfigDefaults.defaultValidateIndicator)
+                validateIndicator: @escaping ValidateIndicator = DetailerConfigDefaults.validateIndicator)
     {
         self.minWidth = minWidth
         self.canEdit = canEdit

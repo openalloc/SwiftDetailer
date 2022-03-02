@@ -18,36 +18,59 @@
 
 import SwiftUI
 
-public extension View {
+extension View {
     /// LIGHTWEIGHT field validation. For heavyweight validation see the element validation that runs on save.
     /// Automatically wrap the View with an indicator in an HStack {}.
-    func validate<Element, T>(_ ctx: DetailerContext<Element>,
-                              _ element: Binding<Element>,
-                              _ keyPath: KeyPath<Element, T>,
-                              _ test: @escaping (T) -> Bool) -> some View
-        where Element: Identifiable, T: Equatable
+    public func validate<Element, T>(_ ctx: DetailerContext<Element>,
+                                     _ element: Binding<Element>,
+                                     _ keyPath: KeyPath<Element, T>,
+                                     _ test: @escaping (T) -> Bool) -> some View
+    where Element: Identifiable, T: Equatable
     {
         validate(ctx, element.wrappedValue, keyPath, test)
     }
-
+    
     /// Automatically wrap the View with an indicator in an HStack {}.
-    func validate<Element, T>(_ ctx: DetailerContext<Element>,
-                              _ element: Element,
-                              _ keyPath: KeyPath<Element, T>,
-                              _ test: @escaping (T) -> Bool) -> some View
-        where Element: Identifiable, T: Equatable
+    public func validate<Element, T>(_ ctx: DetailerContext<Element>,
+                                     _ element: Element,
+                                     _ keyPath: KeyPath<Element, T>,
+                                     _ test: @escaping (T) -> Bool) -> some View
+    where Element: Identifiable, T: Equatable
     {
         let value: T = element[keyPath: keyPath]
-
+        return validate(ctx, value, keyPath, test)
+    }
+    
+    public func validate<Element, T>(_ ctx: DetailerContext<Element>,
+                                     _ value: T,
+                                     _ keyPath: KeyPath<Element, T>,
+                                     _ test: @escaping (T) -> Bool) -> some View
+    where Element: Identifiable, T: Equatable
+    {
         // NOTE type-erase to collectively track validation failures
         let anyKeyPath: AnyKeyPath = keyPath
-
-        return HStack {
-            self
+        
+        return wrap() {
             Validate(ctx: ctx,
                      anyKeyPath: anyKeyPath,
                      value: value,
                      test: test)
+        }
+    }
+    
+    /// A simple display of indicator, without any context.
+    public func validate<Element>(_ config: DetailerConfig<Element>, _ testResult: Bool) -> some View {
+        wrap() {
+            config.validateIndicator(testResult)
+        }
+    }
+    
+    // MARK: Helpers
+    
+    private func wrap<Content: View>(_ content: () -> Content) -> some View {
+        HStack {
+            self
+            content()
         }
     }
 }
