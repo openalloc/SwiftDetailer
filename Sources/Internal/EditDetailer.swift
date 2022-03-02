@@ -23,7 +23,8 @@ struct EditDetailer<Element, Detail, Container>: View
     Detail: View,
     Container: View
 {
-    typealias DetailContent = (DetailerContext<Element>, Binding<Element>) -> Detail
+    typealias BoundValue = Binding<Element>
+    typealias DetailContent = (DetailerContext<Element>, BoundValue) -> Detail
     typealias ContainerContent = () -> Container
 
     // MARK: - Parameters

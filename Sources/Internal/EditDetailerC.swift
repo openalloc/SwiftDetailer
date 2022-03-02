@@ -17,7 +17,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct EditDetailerC<Element, Detail, Container>: View
     where Element: Identifiable & ObservableObject,
@@ -33,7 +32,6 @@ struct EditDetailerC<Element, Detail, Container>: View
     var config: DetailerConfig<Element>
     @Binding var toEdit: Element?
     @Binding var isAdd: Bool
-    //var childContext: NSManagedObjectContext
     var detailContent: DetailContent
     var containerContent: ContainerContent
 
@@ -58,7 +56,6 @@ struct EditDetailerC<Element, Detail, Container>: View
                     element: element,
                     isAdd: $isAdd,
                     detailContent: detailContent)
-//            .environment(\.managedObjectContext, childContext)
         // .animation(.default)
     }
 }
