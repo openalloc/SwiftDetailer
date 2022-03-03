@@ -52,7 +52,7 @@ public struct DetailerConfig<Element>
     // MARK: Parameters
 
     public let minWidth: CGFloat
-    public let canEdit: CanEdit?
+    public let canEdit: CanEdit
     public let canDelete: CanDelete
     public let onDelete: OnDelete?
     public let onValidate: OnValidate
@@ -62,7 +62,7 @@ public struct DetailerConfig<Element>
     public let validateIndicator: ValidateIndicator
 
     public init(minWidth: CGFloat = DetailerConfigDefaults.minWidth,
-                canEdit: CanEdit? = nil,
+                canEdit: @escaping CanEdit = { _ in true },
                 canDelete: @escaping CanDelete = { _ in true },
                 onDelete: OnDelete? = nil,
                 onValidate: @escaping OnValidate = { _, _ in [] },
