@@ -160,6 +160,8 @@ It shows _Detailer_ used with `LazyVGrid` and `Table` containers.
 
 ## Menuing
 
+See [SwiftDetailerMenu](https://github.com/openalloc/SwiftDetailerMenu) for optional menu support.
+
 The use of context menus for macOS and iOS:
 
 macOS | iOS
@@ -216,6 +218,7 @@ If this validation is used, the user will not be able to save changes until it r
 
 ## See Also
 
+* [SwiftDetailerMenu](https://github.com/openalloc/SwiftDetailerMenu) - optional menu support for _SwiftDetailer_
 * [DetailerDemo](https://github.com/openalloc/DetailerDemo) - the demonstration app for this library
 * [TablerCoreDemo](https://github.com/openalloc/TablerCoreDemo) - the demonstration app for this library, for Core Data sources
 
