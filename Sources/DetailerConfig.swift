@@ -42,7 +42,7 @@ public struct DetailerConfig<Element>
 
     public typealias CanDelete = (Element) -> Bool
     public typealias CanEdit = (Element) -> Bool
-    public typealias OnDelete = (Element.ID) -> Void
+    public typealias OnDelete = (Element) -> Void
     public typealias OnValidate = (Context, Element) -> [String]
     public typealias OnCancel = (Context, Element) -> Void
     public typealias OnSave = (Context, Element) -> Void

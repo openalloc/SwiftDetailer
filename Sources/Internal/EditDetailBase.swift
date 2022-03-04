@@ -155,7 +155,7 @@ where Element: Identifiable,
     
     private func deleteAction() {
         guard let _onDelete = config.onDelete else { return }
-        _onDelete(element.id)
+        _onDelete(element)
         dismissAction()
     }
     
