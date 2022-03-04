@@ -26,10 +26,10 @@ where Element: Identifiable,
     typealias BoundValue = Binding<Element>
     typealias DetailContent = (DetailerContext<Element>, BoundValue) -> Detail
     
-    var config: DetailerConfig<Element>
+    let config: DetailerConfig<Element>
     @State var element: Element
     @Binding var isAdd: Bool
-    var detailContent: DetailContent
+    let detailContent: DetailContent
     
     var body: some View {
         EditDetailBase(config: config,

@@ -29,10 +29,10 @@ where Element: Identifiable,
     
     // MARK: Parameters
     
-    var config: DetailerConfig<Element>
-    var element: Element
+    let config: DetailerConfig<Element>
+    let element: Element
     @Binding var isAdd: Bool
-    var detailContent: DetailContent
+    let detailContent: DetailContent
     
     // MARK: Locals
     
@@ -67,7 +67,9 @@ where Element: Identifiable,
     var body: some View {
         VStack(alignment: .leading) { // .leading needed to keep title from centering
 #if os(macOS)
-            Text(config.titler(element)).font(.largeTitle)
+            if let title = config.titler?(element) {
+                Text(title).font(.largeTitle)
+            }
 #endif
             // this is where the user will typically declare a Form or VStack
             detailContent(context)
@@ -110,7 +112,7 @@ where Element: Identifiable,
 #endif
         
 #if os(iOS) || targetEnvironment(macCatalyst)
-        .navigationTitle(config.titler(element))
+        .navigationTitle(config.titler?(element) ?? "")
 #endif
     }
     

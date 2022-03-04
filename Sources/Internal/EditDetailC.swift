@@ -26,10 +26,10 @@ where Element: Identifiable & ObservableObject,
     typealias ProjectedValue = ObservedObject<Element>.Wrapper
     typealias DetailContent = (DetailerContext<Element>, ProjectedValue) -> Detail
     
-    var config: DetailerConfig<Element>
+    let config: DetailerConfig<Element>
     @ObservedObject var element: Element
     @Binding var isAdd: Bool
-    var detailContent: DetailContent
+    let detailContent: DetailContent
     
     var body: some View {
         EditDetailBase(config: config,

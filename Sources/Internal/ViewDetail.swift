@@ -28,16 +28,18 @@ struct ViewDetail<Element, Detail>: View
 
     // MARK: Parameters
 
-    var config: DetailerConfig<Element>
+    let config: DetailerConfig<Element>
     @State var element: Element
-    var viewContent: ViewContent
+    let viewContent: ViewContent
 
     // MARK: Views
 
     var body: some View {
         VStack(alignment: .leading) { // .leading needed to keep title from centering
             #if os(macOS)
-                Text(config.titler(element)).font(.largeTitle)
+            if let title = config.titler?(element) {
+                Text(title).font(.largeTitle)
+            }
             #endif
             // this is where the user will typically declare a VStack or Form
             viewContent(element)
@@ -61,7 +63,7 @@ struct ViewDetail<Element, Detail>: View
         #endif
 
         #if os(iOS) || targetEnvironment(macCatalyst)
-        .navigationTitle(config.titler(element))
+        .navigationTitle(config.titler?(element) ?? "")
         #endif
     }
 

@@ -25,10 +25,10 @@ struct Validate<Element, T>: View
 {
     typealias Test = (T) -> Bool
 
-    var ctx: DetailerContext<Element>
-    var anyKeyPath: AnyKeyPath
-    var value: T
-    var test: Test
+    let ctx: DetailerContext<Element>
+    let anyKeyPath: AnyKeyPath
+    let value: T
+    let test: Test
 
     var body: some View {
         ctx.config.validateIndicator(test(value))

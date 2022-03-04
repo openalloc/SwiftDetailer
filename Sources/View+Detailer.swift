@@ -25,7 +25,7 @@ public extension View {
     typealias EditContentR<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
     
     /// For Random Access Collection source
-    func editDetailer<E, D>(_ config: DetailerConfig<E>,
+    func editDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toEdit: Binding<E?>,
                             isAdd: Binding<Bool>,
                             @ViewBuilder detailContent: @escaping EditContentR<E, D>) -> some View
@@ -51,7 +51,7 @@ public extension View {
     }
     
     /// For Core Data source
-    func editDetailer<E, D>(_ config: DetailerConfig<E>,
+    func editDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toEdit: Binding<E?>,
                             isAdd: Binding<Bool>,
                             @ViewBuilder detailContent: @escaping EditContentC<E, D>) -> some View
@@ -81,7 +81,7 @@ public extension View {
     
     typealias ViewContent<E, D> = (E) -> D where E: Identifiable
     
-    func viewDetailer<E, D>(_ config: DetailerConfig<E>,
+    func viewDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toView: Binding<E?>,
                             @ViewBuilder viewContent: @escaping ViewContent<E, D>) -> some View
     where E: Identifiable,

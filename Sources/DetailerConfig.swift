@@ -58,7 +58,7 @@ public struct DetailerConfig<Element>
     public let onValidate: OnValidate
     public let onSave: OnSave?
     public let onCancel: OnCancel
-    public let titler: Titler
+    public let titler: Titler?
     public let validateIndicator: ValidateIndicator
 
     public init(minWidth: CGFloat = DetailerConfigDefaults.minWidth,
@@ -68,7 +68,7 @@ public struct DetailerConfig<Element>
                 onValidate: @escaping OnValidate = { _, _ in [] },
                 onSave: OnSave? = nil,
                 onCancel: @escaping OnCancel = { _, _ in },
-                titler: @escaping Titler,
+                titler: Titler? = nil,
                 validateIndicator: @escaping ValidateIndicator = DetailerConfigDefaults.validateIndicator)
     {
         self.minWidth = minWidth
