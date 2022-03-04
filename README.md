@@ -69,18 +69,19 @@ struct ContentView: View {
 
 To add basic support for a detail page, targeting both macOS and iOS, you'll need to:
 
-* A. Import the `SwiftDetailer` package.
-* B. Add state properties.
+* A. Import the `SwiftDetailer` and `SwiftDetailerMenu` packages.
+* B. Add state properties, and typealias for cleaner code.
 * C. Give each row a menu (context for macOS; swipe for iOS).
 * D. Add a call to `editDetailer`, available as a modifier.
-* E. Include a `Form` containing the fields to edit, and...
-* F. Add an action handler to save a modified `Fruit` element, along with a few support methods.
+* E. Include a `Form` containing the fields to edit, and ...
+* F. Add an action handler to save a modified `Fruit` element.
 
 These are shown (and annotated) in the modified code below:
 
 ```swift
 import SwiftUI
-import Detailer // A
+import Detailer         // A
+import DetailerMenu
 
 struct Fruit: Identifiable {
     var id: String
@@ -103,6 +104,9 @@ struct ContentView: View {
     @State private var toEdit: Fruit? = nil // B
     @State private var isAdd: Bool = false
 
+    typealias Config = DetailerConfig<Fruit>
+    typealias Context = DetailerContext<Fruit>
+
     var body: some View {
         List(fruits) { fruit in
             HStack {
@@ -113,14 +117,14 @@ struct ContentView: View {
             }
             .modifier(menu(fruit)) // C
         }
-        .editDetailer(config,
+        .editDetailer(Config(onSave: saveAction),
                       toEdit: $toEdit,
                       isAdd: $isAdd,
                       detailContent: editDetail) // D
     }
     
     // E
-    private func editDetail(ctx: DetailerContext<Fruit>, element: Binding<Fruit>) -> some View {
+    private func editDetail(ctx: Context, element: Binding<Fruit>) -> some View {
         Form {
             TextField("ID", text: element.id)
             TextField("Name", text: element.name)
@@ -130,16 +134,13 @@ struct ContentView: View {
     }
     
     // F
-    private func saveAction(_ context: DetailerContext<Fruit>, _ element: Fruit) {
+    private func saveAction(_ context: Context, _ element: Fruit) {
         if let n = fruits.firstIndex(where: { $0.id == element.id }) {
             fruits[n] = element
         }
     }
     
-    private var config: DetailerConfig<Fruit> {
-        DetailerConfig<Fruit>(onSave: saveAction)
-    }
-    
+    // C
 #if os(macOS)
     private func menu(_ fruit: Fruit) -> EditDetailerContextMenu<Fruit> {
         EditDetailerContextMenu(fruit) { toEdit = $0 }
