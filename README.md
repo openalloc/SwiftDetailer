@@ -142,11 +142,11 @@ struct ContentView: View {
     
 #if os(macOS)
     private func menu(_ fruit: Fruit) -> EditDetailerContextMenu<Fruit> {
-        EditDetailerContextMenu(config, $toEdit, fruit)
+        EditDetailerContextMenu(fruit) { toEdit = $0 }
     }
 #elseif os(iOS)
     private func menu(_ fruit: Fruit) -> EditDetailerSwipeMenu<Fruit> {
-        EditDetailerSwipeMenu(config, $toEdit, fruit)
+        EditDetailerSwipeMenu(fruit) { toEdit = $0 }
     }
 #endif
 }
@@ -160,7 +160,7 @@ It shows _Detailer_ used with `LazyVGrid` and `Table` containers.
 
 ## Menuing
 
-See [SwiftDetailerMenu](https://github.com/openalloc/SwiftDetailerMenu) for optional menu support.
+You can invoke _Detailer_ by various methods. One way is via context or swipe menus. For _optional_ menu support see [SwiftDetailerMenu](https://github.com/openalloc/SwiftDetailerMenu).
 
 The use of context menus for macOS and iOS:
 
@@ -176,7 +176,9 @@ iOS
 
 ## Validation
 
-You can optionally validate data both at the field and record level.
+You can _optionally_ validate data using _Detailer_. Two approaches are available: field and record level.
+
+Field and record level validation can be used individually or in concert.
 
 ### Field-level validation
 
