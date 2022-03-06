@@ -123,18 +123,18 @@ struct ContentView: View {
     }
     
     // E
-    private func editDetail(ctx: Context, element: Binding<Fruit>) -> some View {
+    private func editDetail(ctx: Context, fruit: Binding<Fruit>) -> some View {
         Form {
-            TextField("ID", text: element.id)
-            TextField("Name", text: element.name)
-            TextField("Weight", value: element.weight, formatter: NumberFormatter())
-            ColorPicker("Color", selection: element.color)
+            TextField("ID", text: fruit.id)
+            TextField("Name", text: fruit.name)
+            TextField("Weight", value: fruit.weight, formatter: NumberFormatter())
+            ColorPicker("Color", selection: fruit.color)
         }
     }
     
     // F
-    private func saveAction(_ context: Context, _ element: Fruit) {
-        if let n = fruits.firstIndex(where: { $0.id == element.id }) {
+    private func saveAction(ctx: Context, fruit: Fruit) {
+        if let n = fruits.firstIndex(where: { $0.id == fruit.id }) {
             fruits[n] = element
         }
     }
