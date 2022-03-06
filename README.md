@@ -15,21 +15,23 @@ macOS | iOS
 * Convenient editing (and viewing) of fielded data in your app
 * Presently targeting macOS v11+ and iOS v14+\*\*
 * Can be used with various collection container types, such as `List`, `Table`, `LazyVStack`, etc.\*
-* Both bound (`editDetailer`) and unbound (`viewDetailer`) views available
+* `.editDetailer` View modifier, to support (bound, read/write) view 
+* `.viewDetailer` View modifier, to support (unbound, read-only) view
 * Option to add new item
 * Option to delete item
 * Option to validate at field-level, with indicators
 * Option to validate at record-level, with alert view
+* Optional `DetailerMenu` package available, for convenient invocation
 * Minimal use of View type erasure (i.e., use of `AnyView`)
 * No external dependencies!
 
-\* And also the `Tabler` table component (by the same author; see link below)
+\* And also the companion [Tabler](https://github.com/openalloc/SwiftTabler) component (by the same author)
 
 \*\* Other platforms like macCatalyst, iPad on Mac, watchOS, tvOS, etc. are poorly supported, if at all. Please contribute to improve support!
 
 ## Detailer Example
 
-An example, showing the basic use of _Detailer_. As a baseline, start with the display of rows of data in a `List`:
+An example, showing the basic use of _Detailer_. As a baseline, start with a display of rows of data in a `List`:
 
 ```swift
 import SwiftUI
@@ -65,10 +67,10 @@ struct ContentView: View {
 }
 ```
 
-To add basic support for a detail page, targeting both macOS and iOS, you'll need to:
+Then, to add basic support for a detail page, targeting both macOS and iOS, you'll need to:
 
 * A. Import the `SwiftDetailer` and `SwiftDetailerMenu` packages.
-* B. Add state properties, and typealias for cleaner code.
+* B. Add state properties, and a typealias for cleaner code.
 * C. Give each row a menu (context for macOS; swipe for iOS).
 * D. Add a call to `editDetailer`, available as a modifier.
 * E. Include a `Form` containing the fields to edit, and ...
@@ -102,7 +104,6 @@ struct ContentView: View {
     @State private var toEdit: Fruit? = nil // B
     @State private var isAdd: Bool = false
 
-    typealias Config = DetailerConfig<Fruit>
     typealias Context = DetailerContext<Fruit>
 
     var body: some View {
@@ -115,7 +116,7 @@ struct ContentView: View {
             }
             .modifier(menu(fruit)) // C
         }
-        .editDetailer(Config(onSave: saveAction),
+        .editDetailer(.init(onSave: saveAction),
                       toEdit: $toEdit,
                       isAdd: $isAdd,
                       detailContent: editDetail) // D
@@ -216,6 +217,25 @@ It's a parameter of the `DetailerConfig` initialization, specifically `onValidat
 In your action handler, test the record and, if okay, return `[]`, an empty string array. Populate the array with messages if invalid. They will be presented to the user in an alert.
 
 If this validation is used, the user will not be able to save changes until it returns `[]`.
+
+
+## Configuration
+
+Defaults can vary by platform. See the `DetailerConfigDefaults` code for specifics.
+
+The `can` handlers are typically used to enable or disable controls, such as menu items. They are constrained by the definition of their `on` counterparts.
+
+The `on` handlers, when defined, will enable the associated operation.
+
+- `minWidth: CGFloat` - minimum sheet width; default varies by platform
+- `canEdit: (Element) -> Bool` - per-element modification enabling, if `onSave` defined; defaults to `{ _ in true }`
+- `canDelete: (Element) -> Bool` - per-element deletion enabling, if `onDelete` defined; defaults to `{ _ in true }`
+- `onDelete: ((Element) -> Void)?` - handler for deletion; defaults to `nil`
+- `onValidate: (Context, Element) -> [String]` - handler for *heavyweight* validation; defaults to  `{ _, _ in [] }`
+- `onSave: ((Context, Element) -> Void)?` - handler for user save; defaults to `nil`
+- `onCancel: (Context, Element) -> Void` - handler for user cancel; defaults to `{ _, _ in }`
+- `titler: ((Element) -> String)?` - handler for title generation; defaults to `nil`
+- `validateIndicator: (Bool) -> AnyView` - defaults to "exclamationmark.triangle" image, with additional attributes
 
 ## See Also
 
