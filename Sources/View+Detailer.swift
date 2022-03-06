@@ -24,7 +24,7 @@ public extension View {
     typealias EditContentC<E, D> = (DetailerContext<E>, ProjectedValue<E>) -> D where E: Identifiable & ObservableObject
     typealias EditContentR<E, D> = (DetailerContext<E>, Binding<E>) -> D where E: Identifiable
     
-    /// For Random Access Collection source
+    /// For Value data source
     func editDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toEdit: Binding<E?>,
                             isAdd: Binding<Bool>,
@@ -50,7 +50,7 @@ public extension View {
         }
     }
     
-    /// For Core Data source
+    /// For Reference data source, including Core Data
     func editDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toEdit: Binding<E?>,
                             isAdd: Binding<Bool>,
