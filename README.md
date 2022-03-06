@@ -2,9 +2,6 @@
 
 A multi-platform SwiftUI component for editing fielded data.
 
-**NOTE** <em>this component is BRAND NEW and under active development. If you need stability, you should fork, at least until the API has stabilized with version 1.x.x.</em>
-
-
 Available as an open source library to be incorporated in SwiftUI apps.
 
 _SwiftDetailer_ is part of the [OpenAlloc](https://github.com/openalloc) family of open source Swift software tools.
@@ -16,12 +13,13 @@ macOS | iOS
 ## Features
 
 * Convenient editing (and viewing) of fielded data in your app
-* Can be used with various collection container types, such as `List`, `Table`, `LazyVStack`, etc.\*
 * Presently targeting macOS v11+ and iOS v14+\*\*
+* Can be used with various collection container types, such as `List`, `Table`, `LazyVStack`, etc.\*
 * Both bound (`editDetailer`) and unbound (`viewDetailer`) views available
-* Optional support for operations to add new records and delete them
-* Optional support for field-level validation, with indicators
-* Optional support for record-level validation, with alert view
+* Option to add new item
+* Option to delete item
+* Option to validate at field-level, with indicators
+* Option to validate at record-level, with alert view
 * Minimal use of View type erasure (i.e., use of `AnyView`)
 * No external dependencies!
 
@@ -227,7 +225,7 @@ If this validation is used, the user will not be able to save changes until it r
 
 Swift open-source libraries (by the same author):
 
-* [SwiftTabler](https://github.com/openalloc/SwiftTabler) - multi-platform SwiftUI component for displaying (and interacting with) tabular data
+* [SwiftTabler](https://github.com/openalloc/SwiftTabler) - multi-platform SwiftUI component for tabular data
 * [AllocData](https://github.com/openalloc/AllocData) - standardized data formats for investing-focused apps and tools
 * [FINporter](https://github.com/openalloc/FINporter) - library and command-line tool to transform various specialized finance-related formats to the standardized schema of AllocData
 * [SwiftCompactor](https://github.com/openalloc/SwiftCompactor) - formatters for the concise display of Numbers, Currency, and Time Intervals
