@@ -14,6 +14,7 @@ macOS | iOS
 
 * Convenient editing (and viewing) of fielded data in your app
 * Presently targeting macOS v11+ and iOS v14+\*\*
+* Supporting both value and reference semantics (including Core Data, which uses the latter)
 * Can be used with various collection container types, such as `List`, `Table`, `LazyVStack`, etc.\*
 * `.editDetailer` View modifier, to support (bound, read/write) view 
 * `.viewDetailer` View modifier, to support (unbound, read-only) view
