@@ -135,7 +135,7 @@ struct ContentView: View {
     // F
     private func saveAction(ctx: Context, fruit: Fruit) {
         if let n = fruits.firstIndex(where: { $0.id == fruit.id }) {
-            fruits[n] = element
+            fruits[n] = fruit
         }
     }
     
@@ -187,15 +187,15 @@ This is a *lightweight* form of validation where individual fields get a closure
 Field-level validation is implemented as modifiers in the detail form, as in this example of three(3) validators used in the demo app:
 
 ```swift
-private func editDetail(ctx: DetailerContext<Fruit>, element: Binding<Fruit>) -> some View {
+private func editDetail(ctx: DetailerContext<Fruit>, fruit: Binding<Fruit>) -> some View {
     Form {
-        TextField("ID", text: element.id)
-            .validate(ctx, element, \.id) { $0.count > 0 }
-        TextField("Name", text: element.name)
-            .validate(ctx, element, \.name) { $0.count > 0 }
-        TextField("Weight", value: element.weight, formatter: NumberFormatter())
-            .validate(ctx, element, \.weight) { $0 > 0 }
-        ColorPicker("Color", selection: element.color)
+        TextField("ID", text: fruit.id)
+            .validate(ctx, fruit, \.id) { $0.count > 0 }
+        TextField("Name", text: fruit.name)
+            .validate(ctx, fruit, \.name) { $0.count > 0 }
+        TextField("Weight", value: fruit.weight, formatter: NumberFormatter())
+            .validate(ctx, fruit, \.weight) { $0 > 0 }
+        ColorPicker("Color", selection: fruit.color)
     }
 }
 ```
@@ -206,7 +206,7 @@ By default, invalid fields will be suffixed with a warning icon, currently an "e
 
 All field-level validations must return `true` for the `Save` button to be enabled.
 
-TIP: for consistent margin spacing in layout, you can create a validation that always succeeds: `.validate(...) { _ in true }`.
+**TIP**: for consistent margin spacing in layout, you can create a validation that always succeeds: `.validate(...) { _ in true }`.
 
 ### Record-level validation
 
@@ -240,8 +240,8 @@ The `on` handlers, when defined, will enable the associated operation.
 ## See Also
 
 * [SwiftDetailerMenu](https://github.com/openalloc/SwiftDetailerMenu) - optional menu support for _SwiftDetailer_
-* [DetailerDemo](https://github.com/openalloc/DetailerDemo) - the demonstration app for this library
-* [TablerCoreDemo](https://github.com/openalloc/TablerCoreDemo) - the demonstration app for this library, for Core Data sources
+* [DetailerDemo](https://github.com/openalloc/DetailerDemo) - the demonstration app for this library, using a value data source
+* [TablerCoreDemo](https://github.com/openalloc/TablerCoreDemo) - the demonstration app for this library, using a Core Data source
 
 Swift open-source libraries (by the same author):
 
