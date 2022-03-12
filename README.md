@@ -247,6 +247,7 @@ The `on` handlers, when defined, will enable the associated operation.
 Swift open-source libraries (by the same author):
 
 * [SwiftTabler](https://github.com/openalloc/SwiftTabler) - multi-platform SwiftUI component for tabular data
+* [SwiftTablerScroller](https://github.com/openalloc/SwiftTablerScroller) - multi-platform SwiftUI component for the horizontal scrolling of tabular data in compact areas
 * [AllocData](https://github.com/openalloc/AllocData) - standardized data formats for investing-focused apps and tools
 * [FINporter](https://github.com/openalloc/FINporter) - library and command-line tool to transform various specialized finance-related formats to the standardized schema of AllocData
 * [SwiftCompactor](https://github.com/openalloc/SwiftCompactor) - formatters for the concise display of Numbers, Currency, and Time Intervals
