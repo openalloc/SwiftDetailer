@@ -71,7 +71,7 @@ struct ContentView: View {
 Then, to add basic support for a detail page, targeting both macOS and iOS, you'll need to:
 
 * A. Import the `SwiftDetailer` and `SwiftDetailerMenu` packages.
-* B. Add state properties, and a typealias for cleaner code.
+* B. Add state property for element to edit, and a typealias for cleaner code.
 * C. Give each row a menu (context for macOS; swipe for iOS).
 * D. Add a call to `editDetailer`, available as a modifier.
 * E. Include a `Form` containing the fields to edit, and ...
@@ -103,7 +103,6 @@ struct ContentView: View {
     ]
     
     @State private var toEdit: Fruit? = nil // B
-    @State private var isAdd: Bool = false
 
     typealias Context = DetailerContext<Fruit>
 
@@ -119,7 +118,7 @@ struct ContentView: View {
         }
         .editDetailer(.init(onSave: saveAction),
                       toEdit: $toEdit,
-                      isAdd: $isAdd,
+                      originalID: toEdit?.id,
                       detailContent: editDetail) // D
     }
     
@@ -155,7 +154,7 @@ struct ContentView: View {
 
 On macOS, ctrl-click (or right-click) on a row to invoke the context menu. On iOS, swipe the row to invoke the menu.
 
-For a full implementation, see the _DetailerDemo_ project (link below). It extends the example with operations to add new records, delete records, and validate input. 
+For a full implementation, with ability to add new records, see the _DetailerDemo_ project (link below). It extends the example with operations to add new records, delete records, and validate input. 
 
 It shows _Detailer_ used with `LazyVGrid` and `Table` containers.
 

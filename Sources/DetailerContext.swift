@@ -28,14 +28,14 @@ public struct DetailerContext<Element>
 
     public let config: Config
     public let onValidate: OnValidate
-    public let isAdd: Bool
+    public let originalID: Element.ID?
 
     public init(config: Config,
                 onValidate: @escaping OnValidate,
-                isAdd: Bool)
+                originalID: Element.ID? = nil)
     {
         self.config = config
         self.onValidate = onValidate
-        self.isAdd = isAdd
+        self.originalID = originalID
     }
 }

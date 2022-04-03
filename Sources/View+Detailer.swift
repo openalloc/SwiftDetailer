@@ -27,7 +27,7 @@ public extension View {
     /// For Value data source
     func editDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toEdit: Binding<E?>,
-                            isAdd: Binding<Bool>,
+                            originalID: E.ID? = nil,
                             @ViewBuilder detailContent: @escaping EditContentR<E, D>) -> some View
     where E: Identifiable,
           D: View
@@ -36,13 +36,13 @@ public extension View {
 #if os(macOS)
             EditDetailR(config: config,
                         element: element,
-                        isAdd: isAdd,
+                        originalID: originalID,
                         detailContent: detailContent)
 #elseif os(iOS)
             NavigationView {
                 EditDetailR(config: config,
                             element: element,
-                            isAdd: isAdd,
+                            originalID: originalID,
                             detailContent: detailContent)
             }
             .navigationViewStyle(StackNavigationViewStyle())
@@ -53,7 +53,7 @@ public extension View {
     /// For Reference data source, including Core Data
     func editDetailer<E, D>(_ config: DetailerConfig<E> = .init(),
                             toEdit: Binding<E?>,
-                            isAdd: Binding<Bool>,
+                            originalID: E.ID? = nil,
                             @ViewBuilder detailContent: @escaping EditContentC<E, D>) -> some View
     where E: Identifiable & ObservableObject,
           D: View
@@ -62,13 +62,13 @@ public extension View {
 #if os(macOS)
             EditDetailC(config: config,
                         element: element,
-                        isAdd: isAdd,
+                        originalID: originalID,
                         detailContent: detailContent)
 #elseif os(iOS)
             NavigationView {
                 EditDetailC(config: config,
                             element: element,
-                            isAdd: isAdd,
+                            originalID: originalID,
                             detailContent: detailContent)
             }
             .navigationViewStyle(StackNavigationViewStyle())

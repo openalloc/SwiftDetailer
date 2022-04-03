@@ -28,13 +28,13 @@ where Element: Identifiable,
     
     let config: DetailerConfig<Element>
     @State var element: Element
-    @Binding var isAdd: Bool
+    let originalID: Element.ID?
     let detailContent: DetailContent
     
     var body: some View {
         EditDetailBase(config: config,
                        element: element,
-                       isAdd: $isAdd) { context in
+                       originalID: originalID) { context in
             detailContent(context, $element)
         }
     }

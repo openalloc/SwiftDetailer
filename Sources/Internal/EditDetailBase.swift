@@ -31,7 +31,7 @@ where Element: Identifiable,
     
     let config: DetailerConfig<Element>
     let element: Element
-    @Binding var isAdd: Bool
+    let originalID: Element.ID?
     let detailContent: DetailContent
     
     // MARK: Locals
@@ -43,7 +43,7 @@ where Element: Identifiable,
     private var context: DetailerContext<Element> {
         DetailerContext<Element>(config: config,
                                  onValidate: validateAction,
-                                 isAdd: isAdd)
+                                 originalID: originalID)
     }
     
     private var isDeleteAvailable: Bool {
@@ -167,7 +167,6 @@ where Element: Identifiable,
     }
     
     private func dismissAction() {
-        isAdd = false
         presentationMode.wrappedValue.dismiss()
     }
 }
