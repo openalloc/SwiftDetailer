@@ -19,20 +19,19 @@
 import SwiftUI
 
 public enum DetailerConfigDefaults {
-    
     #if os(macOS)
-    public static let minWidth: CGFloat = 300
+        public static let minWidth: CGFloat = 300
     #elseif os(iOS)
-    public static let minWidth: CGFloat = 0
+        public static let minWidth: CGFloat = 0
     #endif
-    
+
     public static let validateIndicator: (Bool) -> AnyView = { AnyView(
         Image(systemName: "exclamationmark.triangle")
             .font(.title2)
             .backport.symbolRenderingMode()
             .foregroundColor(.orange)
             .opacity($0 ? 0 : 1)
-    )}
+    ) }
 }
 
 public struct DetailerConfig<Element>
@@ -82,7 +81,6 @@ public struct DetailerConfig<Element>
         self.validateIndicator = validateIndicator
     }
 }
-
 
 // Backport for .symbolRenderingMode which isn't supported in earlier versions
 struct Backport<Content: View> {

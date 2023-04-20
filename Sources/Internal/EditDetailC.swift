@@ -20,21 +20,22 @@ import SwiftUI
 
 /// Core Data support
 struct EditDetailC<Element, Detail>: View
-where Element: Identifiable & ObservableObject,
-      Detail: View
+    where Element: Identifiable & ObservableObject,
+    Detail: View
 {
     typealias ProjectedValue = ObservedObject<Element>.Wrapper
     typealias DetailContent = (DetailerContext<Element>, ProjectedValue) -> Detail
-    
+
     let config: DetailerConfig<Element>
     @ObservedObject var element: Element
     let originalID: Element.ID?
     let detailContent: DetailContent
-    
+
     var body: some View {
         EditDetailBase(config: config,
                        element: element,
-                       originalID: originalID) { context in
+                       originalID: originalID)
+        { context in
             detailContent(context, $element)
         }
     }

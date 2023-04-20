@@ -37,9 +37,9 @@ struct ViewDetail<Element, Detail>: View
     var body: some View {
         VStack(alignment: .leading) { // .leading needed to keep title from centering
             #if os(macOS)
-            if let title = config.titler?(element) {
-                Text(title).font(.largeTitle)
-            }
+                if let title = config.titler?(element) {
+                    Text(title).font(.largeTitle)
+                }
             #endif
             // this is where the user will typically declare a VStack or Form
             viewContent(element)

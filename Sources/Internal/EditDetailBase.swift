@@ -19,58 +19,58 @@
 import SwiftUI
 
 struct EditDetailBase<Element, Detail>: View
-where Element: Identifiable,
-      Detail: View
+    where Element: Identifiable,
+    Detail: View
 {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     typealias DetailContent = (DetailerContext<Element>) -> Detail
     typealias Validate<T> = (KeyPath<Element, T>) -> Void
-    
+
     // MARK: Parameters
-    
+
     let config: DetailerConfig<Element>
     let element: Element
     let originalID: Element.ID?
     let detailContent: DetailContent
-    
+
     // MARK: Locals
-    
+
     @State private var invalidFields: Set<AnyKeyPath> = Set()
     @State private var showValidationAlert = false
     @State private var alertMessage: String? = nil
-    
+
     private var context: DetailerContext<Element> {
         DetailerContext<Element>(config: config,
                                  onValidate: validateAction,
                                  originalID: originalID)
     }
-    
+
     private var isDeleteAvailable: Bool {
         config.onDelete != nil
     }
-    
+
     private var canDelete: Bool {
         isDeleteAvailable && config.canDelete(element)
     }
-    
+
     private var isSaveAvailable: Bool {
         config.onSave != nil
     }
-    
+
     private var canSave: Bool {
         isSaveAvailable && invalidFields.isEmpty
     }
-    
+
     // MARK: Views
-    
+
     var body: some View {
         VStack(alignment: .leading) { // .leading needed to keep title from centering
-#if os(macOS)
-            if let title = config.titler?(element) {
-                Text(title).font(.largeTitle)
-            }
-#endif
+            #if os(macOS)
+                if let title = config.titler?(element) {
+                    Text(title).font(.largeTitle)
+                }
+            #endif
             // this is where the user will typically declare a Form or VStack
             detailContent(context)
             // .animation(.default)
@@ -79,9 +79,9 @@ where Element: Identifiable,
             Alert(title: Text("Validation Failure"),
                   message: Text(alertMessage ?? "Requires valid entry before save."))
         }
-#if os(macOS)
+        #if os(macOS)
         .padding()
-#endif
+        #endif
         .toolbar {
             ToolbarItem(placement: .destructiveAction) {
                 Button(action: deleteAction) {
@@ -91,7 +91,7 @@ where Element: Identifiable,
                 .opacity(isDeleteAvailable ? 1 : 0)
                 .disabled(!canDelete)
             }
-            
+
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: cancelAction) {
                     Text("Cancel")
@@ -106,18 +106,18 @@ where Element: Identifiable,
                 .disabled(!canSave)
             }
         }
-#if os(macOS)
+        #if os(macOS)
         // NOTE on macOS, this seems to be needed to avoid excessive height
         .frame(minWidth: config.minWidth, maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-#endif
-        
-#if os(iOS) || targetEnvironment(macCatalyst)
+        #endif
+
+        #if os(iOS) || targetEnvironment(macCatalyst)
         .navigationTitle(config.titler?(element) ?? "")
-#endif
+        #endif
     }
-    
+
     // MARK: Action Handlers
-    
+
     // NOTE: should be invoked via async to avoid updating the state during view render
     private func validateAction(_ anyKeyPath: AnyKeyPath, _ result: Bool) {
         if result {
@@ -132,10 +132,10 @@ where Element: Identifiable,
             }
         }
     }
-    
+
     private func saveAction() {
         guard let _onSave = config.onSave else { return }
-        
+
         // display any validation changes
         let messages = config.onValidate(context, element)
         if messages.count > 0 {
@@ -143,29 +143,29 @@ where Element: Identifiable,
             showValidationAlert = true
             return
         }
-        
+
         let invalidCount = invalidFields.count
         if invalidCount > 0 {
             alertMessage = "\(invalidCount) field(s) require valid values before you can save."
             showValidationAlert = true
             return
         }
-        
+
         _onSave(context, element)
         dismissAction()
     }
-    
+
     private func deleteAction() {
         guard let _onDelete = config.onDelete else { return }
         _onDelete(element)
         dismissAction()
     }
-    
+
     private func cancelAction() {
         config.onCancel(context, element)
         dismissAction()
     }
-    
+
     private func dismissAction() {
         presentationMode.wrappedValue.dismiss()
     }

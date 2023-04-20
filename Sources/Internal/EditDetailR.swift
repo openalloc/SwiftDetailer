@@ -20,26 +20,23 @@ import SwiftUI
 
 /// RandomAccess support
 struct EditDetailR<Element, Detail>: View
-where Element: Identifiable,
-      Detail: View
+    where Element: Identifiable,
+    Detail: View
 {
     typealias BoundValue = Binding<Element>
     typealias DetailContent = (DetailerContext<Element>, BoundValue) -> Detail
-    
+
     let config: DetailerConfig<Element>
     @State var element: Element
     let originalID: Element.ID?
     let detailContent: DetailContent
-    
+
     var body: some View {
         EditDetailBase(config: config,
                        element: element,
-                       originalID: originalID) { context in
+                       originalID: originalID)
+        { context in
             detailContent(context, $element)
         }
     }
 }
-
-
-
-
