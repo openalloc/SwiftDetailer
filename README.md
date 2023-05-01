@@ -239,6 +239,12 @@ The `on` handlers, when defined, will enable the associated operation.
 
 ## See Also
 
+* [SwiftDetailerMenu](https://github.com/openalloc/SwiftDetailerMenu) - optional menuing for _Detailer_, to avoid rolling your own
+
+Apps demonstrating _Detailer_:
+
+* [DetailerDemo](https://github.com/openalloc/DetailerDemo) - basic use of _Detailer_
+
 This library is a member of the _OpenAlloc Project_.
 
 * [_OpenAlloc_](https://openalloc.github.io) - product website for all the _OpenAlloc_ apps and libraries
